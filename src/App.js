@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AddMemory from "./components/AddMemory";
+import UpdateMemory from "./components/UpdateMemory";
+import Profile from "./components/Profile";
+import Logout from "./components/Logout";
+import Footer from "./components/Footer";
+import Memories from "./components/Memories";
+import LoginPage from "./components/LoginPage";
+import SignUpPage from "./components/SignUpPage";
+import PrivateComp from "./components/PrivateComp";
+import { SnackbarProvider } from "notistack";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <SnackbarProvider>
+        <Navbar />
+        {/* <SignUpPage/> */}
+        <Routes>
+          <Route element={<PrivateComp />}>
+            <Route path="/memories/:userId" element={<Memories />}></Route>
+            <Route path="/add-memory/:userId" element={<AddMemory />}></Route>
+            <Route path="/update/:userId" element={<UpdateMemory />}></Route>
+            <Route path="/profile/:userId" element={<Profile />}></Route>
+            <Route path="/logout" element={<Logout />}></Route>
+          </Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/register" element={<SignUpPage />}></Route>
+        </Routes>
+
+        <Footer />
+      </SnackbarProvider>
+    </BrowserRouter>
   );
 }
 
